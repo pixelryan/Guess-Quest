@@ -56,11 +56,14 @@ public class GameController : MonoBehaviour
 
         if (drawnCard != null)
         {
-            GameObject cardObject = Instantiate(cardPrefab, cardSpawnLocator.transform.position, Quaternion.identity, cardSpawnLocator.transform);
+            Vector3 offScreenPos = new Vector3(-10, cardSpawnLocator.transform.position.y, cardSpawnLocator.transform.position.z);
+            Quaternion initialRot = Quaternion.Euler(0, 0, 90);
+            GameObject cardObject = Instantiate(cardPrefab, offScreenPos, initialRot, cardSpawnLocator.transform);
             CardController cardController = cardObject.GetComponent<CardController>();
             cardController.SetUpNewCard(drawnCard);
             lastCardDrawn = cardObject;
             lastCardDrawnInfo = drawnCard;
+            StartCoroutine(DealCardAnimation(cardObject, offScreenPos, initialRot, cardSpawnLocator.transform.position, Quaternion.identity, 1f));
         }
     }
 
@@ -80,7 +83,22 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //Compare Results
+    private IEnumerator DealCardAnimation(GameObject cardObject, Vector3 startPos, Quaternion startRot, Vector3 endPos, Quaternion endRot, float duration)
+    {
+        float time = 0;
+        while (time < duration)
+        {
+            Debug.Log("card is animating");
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+            cardObject.transform.position = Vector3.Lerp(startPos, endPos, t);
+            cardObject.transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        cardObject.transform.position = endPos;
+        cardObject.transform.rotation = endRot;
+    }
 
 
 }
