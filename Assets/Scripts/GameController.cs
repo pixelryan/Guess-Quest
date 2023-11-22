@@ -15,4 +15,11 @@ public class GameController : MonoBehaviour
     {
         
     }
+
+    //Deal Hand
+
+    //Compare Results
+
+    //Shuffle Deck
+
 }
