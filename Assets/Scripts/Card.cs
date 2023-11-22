@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Card
 {
+    public Suit suit;
+    public Rank rank;
     public enum Suit
     {
         Hearts,
@@ -27,5 +29,11 @@ public class Card
         Jack,
         Queen,
         King
+    }
+
+    public Card(Suit suit, Rank rank)
+    {
+        this.suit = suit;
+        this.rank = rank;
     }
 }

@@ -353,8 +353,12 @@ MonoBehaviour:
   suiteTL: {fileID: 6967041096473412297}
   suiteTR: {fileID: 2379842790561779834}
   rank: {fileID: 1004742438020958966}
-  red: {r: 0.93725497, g: 0.21960786, b: 0.2509804, a: 0}
-  black: {r: 0, g: 0, b: 0, a: 0}
+  red: {r: 0.93725497, g: 0.21960786, b: 0.2509804, a: 1}
+  black: {r: 0, g: 0, b: 0, a: 1}
+  spade: {fileID: 21300000, guid: fdedc80050ce1c0429b6d014b18c965c, type: 3}
+  heart: {fileID: 21300000, guid: f5f7f88d70996e24bbdd5ecafa8e8af6, type: 3}
+  club: {fileID: 21300000, guid: 733de22a958256c438e31d96c7bb3269, type: 3}
+  diamond: {fileID: 21300000, guid: 025a4c403bce701429a5afc11d75aeca, type: 3}
 --- !u!1 &8158755861739724175
 GameObject:
   m_ObjectHideFlags: 0

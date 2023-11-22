@@ -9,15 +9,31 @@ public class CardController : MonoBehaviour
     public SpriteRenderer suiteTL, suiteTR;
     public TextMeshProUGUI rank;
     public Color red, black;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Sprite spade, heart, club, diamond;
 
-    // Update is called once per frame
-    void Update()
+
+    public void SetUpNewCard(Card thisCard)
     {
-        
+        Debug.Log("Setting up a new card " + thisCard.suit + " " + thisCard.rank);
+        rank.text = thisCard.rank.ToString();
+        Color textColor;
+        textColor = (thisCard.suit == Card.Suit.Hearts || thisCard.suit == Card.Suit.Diamonds) ? red : black;
+        rank.color = textColor;
+        if (thisCard.suit == Card.Suit.Clubs)
+        {
+            suiteTL.sprite = club;
+        }
+        if (thisCard.suit == Card.Suit.Diamonds)
+        {
+            suiteTL.sprite = diamond;
+        }
+        if (thisCard.suit == Card.Suit.Hearts)
+        {
+            suiteTL.sprite = heart;
+        }
+        if (thisCard.suit == Card.Suit.Spades)
+        {
+            suiteTL.sprite = spade;
+        }
     }
 }
