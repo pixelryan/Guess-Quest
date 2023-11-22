@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour
     public int Score, Lives;
     private bool lastBet, firstDraw = true;
     private UIController UIConRef = null;
+    public AudioClip cardSlide, goodSound, badSound, gameOverSound;
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,15 +47,9 @@ public class GameController : MonoBehaviour
 
     public void DealHand()
     {
-        if (lastCardDrawn != null)
-        {
-            Destroy(lastCardDrawn);
-        }
+        audioSource.PlayOneShot(cardSlide);
         deck.ShuffleDeck();
         Card drawnCard = deck.DrawCard();
-        if (!firstDraw) {
-            CheckGuess(drawnCard, lastBet);
-        }
 
         if (drawnCard != null)
         {
@@ -61,34 +58,25 @@ public class GameController : MonoBehaviour
             GameObject cardObject = Instantiate(cardPrefab, offScreenPos, initialRot, cardSpawnLocator.transform);
             CardController cardController = cardObject.GetComponent<CardController>();
             cardController.SetUpNewCard(drawnCard);
+
+            // If there's a last card, pass it to the coroutine to be used for comparison
+            Card lastCardInfo = lastCardDrawnInfo; // Store the last card's info before updating
+
+            // Start the card deal animation coroutine
+            StartCoroutine(DealCardAnimation(cardObject, offScreenPos, initialRot, cardSpawnLocator.transform.position, Quaternion.identity, 1f, drawnCard, lastCardInfo));
+
+            // Update the references to the last card drawn
             lastCardDrawn = cardObject;
             lastCardDrawnInfo = drawnCard;
-            StartCoroutine(DealCardAnimation(cardObject, offScreenPos, initialRot, cardSpawnLocator.transform.position, Quaternion.identity, 1f));
         }
     }
 
-    private void CheckGuess(Card newCard, bool isHigher)
-    {
-        if (isHigher && (newCard.rank > lastCardDrawnInfo.rank) || (!isHigher && newCard.rank < lastCardDrawnInfo.rank))
-        {
-            Score++;
-            UIConRef.UpdateScore(Score);
-            Debug.Log("Correct guess! New score " + Score);
-        }
-        else
-        {
-            Lives--;
-            UIConRef.UpdateHealth();
-            Debug.Log("Incorrect guess! New Lives " + Lives);
-        }
-    }
-
-    private IEnumerator DealCardAnimation(GameObject cardObject, Vector3 startPos, Quaternion startRot, Vector3 endPos, Quaternion endRot, float duration)
+    private IEnumerator DealCardAnimation(GameObject cardObject, Vector3 startPos, Quaternion startRot, Vector3 endPos, Quaternion endRot, float duration, Card drawnCard, Card lastCardInfo)
     {
         float time = 0;
         while (time < duration)
         {
-            Debug.Log("card is animating");
+            Debug.Log("Card is animating");
             float t = time / duration;
             t = t * t * (3f - 2f * t);
             cardObject.transform.position = Vector3.Lerp(startPos, endPos, t);
@@ -98,7 +86,39 @@ public class GameController : MonoBehaviour
         }
         cardObject.transform.position = endPos;
         cardObject.transform.rotation = endRot;
+
+        // Animation is complete, now check the guess
+        if (!firstDraw)
+        {
+            // Check the guess using the last card's info
+            CheckGuess(drawnCard, lastCardInfo, lastBet);
+        }
+        else
+        {
+            firstDraw = false; // The first card has been drawn and no guess to check
+        }
     }
+
+    private void CheckGuess(Card newCard, Card lastCard, bool isHigher)
+    {
+        // Compare the new card against the last card
+        if ((isHigher && (newCard.rank > lastCard.rank)) || (!isHigher && (newCard.rank < lastCard.rank)))
+        {
+            Score++;
+            UIConRef.UpdateScore(Score);
+            Debug.Log("Correct guess! New score: " + Score);
+            audioSource.PlayOneShot(goodSound);
+        }
+        else
+        {
+            Lives--;
+            UIConRef.UpdateHealth();
+            Debug.Log("Incorrect guess! New Lives: " + Lives);
+            audioSource.PlayOneShot(badSound);
+        }
+    }
+
+
 
 
 }
