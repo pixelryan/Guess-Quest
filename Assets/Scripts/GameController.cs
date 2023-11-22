@@ -11,9 +11,11 @@ public class GameController : MonoBehaviour
     private Card lastCardDrawnInfo;
     public int Score, Lives;
     private bool lastBet, firstDraw = true;
+    private UIController UIConRef = null;
     // Start is called before the first frame update
     void Start()
     {
+        UIConRef = GetComponent<UIController>();
         deck = new Deck();
         DealHand();
     }
@@ -67,11 +69,13 @@ public class GameController : MonoBehaviour
         if (isHigher && (newCard.rank > lastCardDrawnInfo.rank) || (!isHigher && newCard.rank < lastCardDrawnInfo.rank))
         {
             Score++;
+            UIConRef.UpdateScore(Score);
             Debug.Log("Correct guess! New score " + Score);
         }
         else
         {
             Lives--;
+            UIConRef.UpdateHealth();
             Debug.Log("Incorrect guess! New Lives " + Lives);
         }
     }
