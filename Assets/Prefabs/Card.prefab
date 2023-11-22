@@ -96,8 +96,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 16.27
-  m_fontSizeMax: 72
+  m_fontSizeMin: 15.31
+  m_fontSizeMax: 79.7
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -328,8 +328,8 @@ Transform:
   m_GameObject: {fileID: 5295286093111054345}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -92.41, z: 0}
-  m_LocalScale: {x: 41.35, y: 41.35, z: 41.35}
+  m_LocalPosition: {x: 0, y: -97.141, z: 0}
+  m_LocalScale: {x: 41.35, y: 43.413364, z: 41.35}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3249210882992934837}
