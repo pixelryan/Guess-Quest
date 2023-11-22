@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-    public TextMeshProUGUI score;
-    public GameObject heart1, heart2, heart3;
-    private int health = 3;
+    public TextMeshProUGUI score, panelHighScore, panelYourScore, panelLongestStreak;
+    public GameObject heart1, heart2, heart3, gameOverPanel;
+    private int health = 3, highScore = 15, localscore = 0;
+    public bool isGameOver = false;
 
     public void UpdateScore(int newScore)
     {
         score.text = newScore.ToString();
         StartCoroutine(PointAnimation());
+        localscore = newScore;
+    }
+
+    public void PlayAgainButton()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void UpdateHealth()
@@ -32,9 +40,20 @@ public class UIController : MonoBehaviour
         {
             heart1.GetComponent<CanvasRenderer>().SetColor(color: Color.black);
             StartCoroutine(HeartAnimation(heart1));
+            FinishGame();
         }
     }
-
+    private void FinishGame()
+    {
+        gameOverPanel.SetActive(true);
+        isGameOver = true;
+        panelYourScore.text = score.text;
+        if(localscore> highScore)
+        {
+            highScore = localscore;
+            panelHighScore.text = highScore.ToString();
+        }
+    }
     private IEnumerator HeartAnimation(GameObject heart)
     {
         for(int i = 0; i<5; i++)

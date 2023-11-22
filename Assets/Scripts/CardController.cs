@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardController : MonoBehaviour
 {
 
-    public SpriteRenderer suiteTL, suiteTR;
+    public Image suiteTL, suiteTR;
     public TextMeshProUGUI rank;
     public Color red, black;
     public Sprite spade, heart, club, diamond;
