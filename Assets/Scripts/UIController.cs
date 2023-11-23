@@ -6,11 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-    public TextMeshProUGUI score, panelHighScore, panelYourScore, panelLongestStreak;
-    public GameObject heart1, heart2, heart3, gameOverPanel;
+    public TextMeshProUGUI score, panelHighScore, panelYourScore, panelLongestStreak, streakText;
+    public GameObject heart1, heart2, heart3, gameOverPanel, streakObj;
     private int health = 3, highScore = 15, localscore = 0;
     public bool isGameOver = false;
+    GameController GameConRef;
+    private Coroutine colorCycleCoroutine;
 
+
+    private void Start()
+    {
+        GameConRef = GetComponent<GameController>();
+        colorCycleCoroutine = StartCoroutine(SmoothCycleStreakTextColor());
+    }
     public void UpdateScore(int newScore)
     {
         score.text = newScore.ToString();
@@ -53,6 +61,7 @@ public class UIController : MonoBehaviour
             highScore = localscore;
             panelHighScore.text = highScore.ToString();
         }
+        panelLongestStreak.text = GameConRef.currentLongestStreak.ToString();
     }
     private IEnumerator HeartAnimation(GameObject heart)
     {
@@ -63,6 +72,29 @@ public class UIController : MonoBehaviour
         }
         GameObject fadingHeart = Instantiate(heart, heart.transform.position, Quaternion.identity, transform.parent);
         fadingHeart.SetActive(true);
+    }
+
+    private IEnumerator SmoothCycleStreakTextColor()
+    {
+        Color[] colors = new Color[] { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta };
+        int currentColorIndex = 0;
+
+        while (true)
+        {
+            Color startColor = colors[currentColorIndex];
+            Color endColor = colors[(currentColorIndex + 1) % colors.Length];
+            float transitionTime = 0f;
+            float duration = 0.3f; // Duration for each color transition
+
+            while (transitionTime < duration)
+            {
+                streakText.color = Color.Lerp(startColor, endColor, transitionTime / duration);
+                transitionTime += Time.deltaTime;
+                yield return null;
+            }
+
+            currentColorIndex = (currentColorIndex + 1) % colors.Length;
+        }
     }
 
     private IEnumerator PointAnimation()

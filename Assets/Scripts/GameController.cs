@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,15 +10,18 @@ public class GameController : MonoBehaviour
     public Deck deck;
     private GameObject lastCardDrawn;
     private Card lastCardDrawnInfo;
-    public int Score, Lives;
-    private bool lastBet, firstDraw = true;
+    public int Score, Lives, currentStreak, currentLongestStreak;
+    private bool lastBet, firstDraw = true, isAnimating;
     private UIController UIConRef = null;
-    public AudioClip cardSlide, goodSound, badSound, gameOverSound;
+    public AudioClip goodSound, badSound, gameOverSound;
+    public AudioClip[] cardSlide;
     public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentStreak = 0;
+        currentLongestStreak = 0;
         UIConRef = GetComponent<UIController>();
         deck = new Deck();
         DealHand();
@@ -31,23 +35,33 @@ public class GameController : MonoBehaviour
 
     public void HigherButtonPress()
     {
+        if (isAnimating)
+        {
+            return;
+        }
         firstDraw = false;
         Debug.Log("Higher Pressed");
         lastBet = true;
         DealHand();
+        isAnimating = true;
     }
 
     public void LowerButtonPress()
     {
+        if (isAnimating)
+        {
+            return;
+        }
         firstDraw = false;
         Debug.Log("Lower Pressed");
         lastBet = false;
         DealHand();
+        isAnimating = true;
     }
 
     public void DealHand()
     {
-        audioSource.PlayOneShot(cardSlide);
+        audioSource.PlayOneShot(cardSlide[Random.Range(0, cardSlide.Count())]);
         deck.ShuffleDeck();
         Card drawnCard = deck.DrawCard();
 
@@ -97,6 +111,7 @@ public class GameController : MonoBehaviour
         {
             firstDraw = false; // The first card has been drawn and no guess to check
         }
+        isAnimating = false;
     }
 
     private void CheckGuess(Card newCard, Card lastCard, bool isHigher)
@@ -104,13 +119,29 @@ public class GameController : MonoBehaviour
         // Compare the new card against the last card
         if ((isHigher && (newCard.rank > lastCard.rank)) || (!isHigher && (newCard.rank < lastCard.rank)))
         {
-            Score++;
+            currentStreak++;
+            Score += currentStreak;
             UIConRef.UpdateScore(Score);
             Debug.Log("Correct guess! New score: " + Score);
             audioSource.PlayOneShot(goodSound);
+            if (currentStreak > currentLongestStreak)
+            {
+                currentLongestStreak = currentStreak;
+
+            }
+            if (currentStreak > 1)
+            {
+                UIConRef.streakText.text = "STREAK X" + currentStreak.ToString();
+                UIConRef.streakObj.SetActive(true);
+            }
+  
+
         }
         else
         {
+            currentStreak = 0;
+
+            UIConRef.streakObj.SetActive(false);
             Lives--;
             UIConRef.UpdateHealth();
             Debug.Log("Incorrect guess! New Lives: " + Lives);

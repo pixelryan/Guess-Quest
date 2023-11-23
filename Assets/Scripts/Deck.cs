@@ -4,10 +4,11 @@ using System.Collections.Generic;
 public class Deck 
 {
     private List<Card> cards = new List<Card>();
-
+    private Card.Rank? lastCardRank = null;
     public Deck()
     {
         CreateDeck();
+        ShuffleDeck();
     }
 
     private void CreateDeck()
@@ -23,16 +24,22 @@ public class Deck
 
     public Card DrawCard()
     {
-        if(cards.Count > 0)
+        while (cards.Count > 0)
         {
             Card cardToDraw = cards[0];
             cards.RemoveAt(0);
-            return cardToDraw;
+
+            if (cardToDraw.rank != lastCardRank)
+            {
+                lastCardRank = cardToDraw.rank;
+                return cardToDraw;
+            }
+            else
+            {
+                cards.Add(cardToDraw); 
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     public void ShuffleDeck()
