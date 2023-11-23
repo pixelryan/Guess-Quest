@@ -1,4 +1,8 @@
 # Guess-Quest
+
+## Introduction
+Hello! This is a personal project developed over one day. I had to quickly come up with a simple  but fun game, design the UI/UX, and  implement the code in C#. I wanted to not just be a simple win and lose scenario, so I added a Streak system. This feature truly brought the game to life; during a playtest to fix a bug, I found myself playing "one last time" to try and beat a high score just for the challenge of it!
+
  ## Overview
 Welcome to the Higher or Lower card guessing game! Test your luck by guessing if the next card in a deck will be higher or lower than the current one. Each correct guess gets a point, and if you get on a streak your score goes up by even more. Go for a high score, then try to beat that record!
 
@@ -29,9 +33,10 @@ Experience the Higher or Lower Card Game live! Play it right now in your web bro
 - **Special Draws** The game will never draw a card of the same rank to prevent ties.
 
 ## Tools and Technologies
-- - Unity 2022.3.13f1
-  - C# for scripting
-  - Github for version control
+- Unity 2022.3.13f1
+- C# for scripting
+- Github for version control
+- Sound effects by Kenney.nl
 
 ## Time Spent
 - Total design and development time took me about 5 hours.
