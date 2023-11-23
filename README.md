@@ -17,11 +17,11 @@ Experience the Higher or Lower Card Game live! Play it right now in your web bro
  - **Streak System** Consecutive correct guesses lead to higher streaks, increasing the amount of points earned by your streak count.
  - **Fantasy-Themed Graphics** Uniquely made fantasy inspired graphics.
  - **Sound Effects** Hear a random flick of the cards every draw, and casino inspired win and lose sounds.
- - **Score Tracking** Kepe track of the player's local high score, and longest streak of the current game.
+ - **Score Tracking** Keep track of the player's local high score, and longest streak of the current game.
 
 ## How to Play
 1. **Start the Game** Launch the game in Unity or browse to the Web build.
-2. **Make Your Guess** Look at the displayed card and decide ifyou think the next card will be higher or lower.
+2. **Make Your Guess** Look at the displayed card and decide if you think the next card will be higher or lower.
 3. **Choose Higher or Lower** Click the "Higher" or "Lower" button based on your choice to draw the next card.
 4. **Build Your Streak** Each correct guess increases your streak.
 
