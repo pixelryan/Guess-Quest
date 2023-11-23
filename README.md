@@ -2,6 +2,12 @@
  ## Overview
 Welcome to the Higher or Lower card guessing game! Test your luck by guessing if the next card in a deck will be higher or lower than the current one. Each correct guess gets a point, and if you get on a streak your score goes up by even more. Go for a high score, then try to beat that record!
 
+## Play the Game
+Experience the Higher or Lower Card Game live! Play it right now in your web browser.
+
+[Play Game](https://pixelryan.itch.io/high-or-low-guessing-card-game)
+
+
  ## Features
  - **Simple and Intuitive Gameplay** Players make a choice by pressing one of two buttons based on their predicition.
  - **Streak System** Consecutive correct guesses lead to higher streaks, increasing the amount of points earned by your streak count.
