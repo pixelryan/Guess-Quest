@@ -40,3 +40,6 @@ Experience the Higher or Lower Card Game live! Play it right now in your web bro
 
 ## Time Spent
 - Total design and development time took me about 5 hours.
+
+## Time Lapse
+- Enjoy a time lapse video of the project's development condensed to 16 seconds at 64X speed. [Click here to watch the video](https://youtu.be/b7S1dRXfhE4)
